@@ -1,0 +1,159 @@
+C51 COMPILER V9.60.0.0   MAIN                                                              02/17/2023 09:47:28 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: D:\SoftWare\keil5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listin
+                    -gs\main.lst) TABS(2) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          #include <reg52.h>
+   2          #include <intrins.h>
+   3          
+   4          #define uchar unsigned char // 以后unsigned char就可以用uchar代替
+   5          #define uint  unsigned int  // 以后unsigned int 就可以用uint 代替
+   6          
+   7          sbit LcdRs_P   = P3^6;      // 1602液晶的RS管脚       
+   8          sbit LcdRw_P   = P3^5;      // 1602液晶的RW管脚 
+   9          sbit LcdEn_P   = P3^4;      // 1602液晶的EN管脚
+  10          
+  11          
+  12          
+  13          /*********************************************************/
+  14          // 毫秒级的延时函数，time是要延时的毫秒数
+  15          /*********************************************************/
+  16          void DelayMs(uint time)
+  17          {
+  18   1        uint i,j;
+  19   1        for(i=0;i<time;i++)
+  20   1          for(j=0;j<112;j++);
+  21   1      }
+  22          
+  23          
+  24          /*********************************************************/
+  25          // 1602液晶写命令函数，cmd就是要写入的命令
+  26          /*********************************************************/
+  27          void LcdWriteCmd(uchar cmd)
+  28          { 
+  29   1        LcdRs_P = 0;
+  30   1        LcdRw_P = 0;
+  31   1        LcdEn_P = 0;
+  32   1        P0=cmd;
+  33   1        DelayMs(2);
+  34   1        LcdEn_P = 1;    
+  35   1        DelayMs(2);
+  36   1        LcdEn_P = 0;  
+  37   1      }
+  38          
+  39          
+  40          /*********************************************************/
+  41          // 1602液晶写数据函数，dat就是要写入的数据
+  42          /*********************************************************/
+  43          void LcdWriteData(uchar dat)
+  44          {
+  45   1        LcdRs_P = 1; 
+  46   1        LcdRw_P = 0;
+  47   1        LcdEn_P = 0;
+  48   1        P0=dat;
+  49   1        DelayMs(2);
+  50   1        LcdEn_P = 1;    
+  51   1        DelayMs(2);
+  52   1        LcdEn_P = 0;
+  53   1      }
+  54          
+C51 COMPILER V9.60.0.0   MAIN                                                              02/17/2023 09:47:28 PAGE 2   
+
+  55          
+  56          /*********************************************************/
+  57          // 液晶光标定位函数
+  58          /*********************************************************/
+  59          void LcdGotoXY(uchar line,uchar column)
+  60          {
+  61   1        // 第一行
+  62   1        if(line==0)        
+  63   1          LcdWriteCmd(0x80+column); 
+  64   1        // 第二行
+  65   1        if(line==1)        
+  66   1          LcdWriteCmd(0x80+0x40+column); 
+  67   1      }
+  68          
+  69          
+  70          
+  71          /*********************************************************/
+  72          // 液晶输出字符串函数
+  73          /*********************************************************/
+  74          void LcdPrintStr(uchar *str)
+  75          {
+  76   1        while(*str!='\0')
+  77   1            LcdWriteData(*str++);
+  78   1      }
+  79          
+  80          
+  81          /*********************************************************/
+  82          // 1602液晶功能初始化
+  83          /*********************************************************/
+  84          void LcdInit()
+  85          {
+  86   1        LcdWriteCmd(0x38);        // 16*2显示，5*7点阵，8位数据口
+  87   1        LcdWriteCmd(0x0C);        // 开显示，不显示光标
+  88   1        LcdWriteCmd(0x06);        // 地址加1，当写入数据后光标右移
+  89   1        LcdWriteCmd(0x01);        // 清屏
+  90   1      }
+  91          
+  92          /*********************************************************/
+  93          // 开启LCD1602显示
+  94          /*********************************************************/
+  95          void LcdOn()   //开显示器，关光标与闪烁
+  96          {
+  97   1        LcdWriteCmd(0x0c);
+  98   1      }
+  99          /*********************************************************/
+ 100          //关闭LCD1602显示，但DDRAM中内容不丢失，重开后将恢复内容
+ 101          
+ 102          /*********************************************************/
+ 103          void LcdOff()  
+ 104          {
+ 105   1        LcdWriteCmd(0x08);
+ 106   1      }
+ 107          
+ 108          /*********************************************************/
+ 109          // 1602液晶显示内容初始化
+ 110          /*********************************************************/
+ 111          void LcdShowInit()
+ 112          {
+ 113   1        LcdGotoXY(0,0);                   // 定位到第0行第0列
+ 114   1        LcdPrintStr("   LCD Test  "); // 第0行显示“            ”
+ 115   1        LcdGotoXY(1,0);                   // 定位到第1行第0列
+ 116   1        LcdPrintStr("ABCDEFGHIJKLMNOP");  // 第1行显示“ ”
+C51 COMPILER V9.60.0.0   MAIN                                                              02/17/2023 09:47:28 PAGE 3   
+
+ 117   1      }
+ 118          
+ 119          
+ 120          /*********************************************************/
+ 121          // 主函数
+ 122          /*********************************************************/
+ 123          void main()
+ 124          {
+ 125   1        LcdInit();                // 液晶功能初始化 
+ 126   1        LcdShowInit();
+ 127   1        
+ 128   1        while(1)
+ 129   1        {
+ 130   2        }
+ 131   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    197    ----
+   CONSTANT SIZE    =     31    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       4
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

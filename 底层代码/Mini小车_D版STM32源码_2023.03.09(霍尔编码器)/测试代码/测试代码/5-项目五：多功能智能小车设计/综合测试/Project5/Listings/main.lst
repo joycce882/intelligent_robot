@@ -1,0 +1,165 @@
+C51 COMPILER V9.60.0.0   MAIN                                                              02/17/2023 10:58:02 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: D:\SoftWare\keil5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listin
+                    -gs\main.lst) TABS(2) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          #include <reg52.h>
+   2          #include <intrins.h>
+   3          //-------KEY-PIN-----------//
+   4          sbit KEY1 = P3^0;
+   5          sbit KEY2 = P3^1;
+   6          sbit KEY3 = P3^2;
+   7          sbit KEY4 = P3^3;
+   8          //-------舵机-PIN-----------//
+   9          sbit SG90=P2^5;
+  10          
+  11          /*函数或者变量声明*/
+  12          void Delay100ms();
+  13          void Time0Init();
+  14          void  ServoMotorTest(void);
+  15          
+  16          
+  17          //-------红外避障-----------//
+  18          sbit XG1OUT = P0^4;
+  19          sbit XG2OUT = P0^5;
+  20          sbit XG3OUT = P0^6;
+  21          //LED-PIN
+  22          sbit LED3 = P1^0;
+  23          sbit LED4 = P1^1;
+  24          sbit LED5 = P1^2;
+  25          void  Lightpatrol_Test  (void);
+  26          
+  27          
+  28          //-------电机-PIN------------//
+  29          //电机1
+  30          sbit IN1 = P0^0; 
+  31          sbit IN2 = P0^1;
+  32          //电机2
+  33          sbit IN3 = P0^2;  
+  34          sbit IN4 = P0^3;  
+  35          void L298N_Test(void);
+  36          /*-------------- 主函数--------------*/
+  37          void main()
+  38          {   
+  39   1          Time0Init();
+  40   1          while(1){
+  41   2          ServoMotorTest();
+  42   2          Lightpatrol_Test();
+  43   2          L298N_Test();
+  44   2          }
+  45   1      
+  46   1      }
+  47          
+  48          /*--------------相关函数--------------*/
+  49          //延时函数
+  50          void Delay100ms()   //@11.0592MHz
+  51          {
+  52   1        unsigned char i, j, k;
+  53   1      
+  54   1        i = 5;
+C51 COMPILER V9.60.0.0   MAIN                                                              02/17/2023 10:58:02 PAGE 2   
+
+  55   1        j = 52;
+  56   1        k = 195;
+  57   1        do
+  58   1        {
+  59   2          do
+  60   2          {
+  61   3            while (--k);
+  62   3          } while (--j);
+  63   2        } while (--i);
+  64   1      }
+  65          
+  66          void Time0Init(){
+  67   1        TMOD=0x01;
+  68   1        TL0=0x33;
+  69   1        TH0=0xFE;//配置定时器0，时长0.5ms
+  70   1        
+  71   1        TR0=1;//定时器开启
+  72   1        
+  73   1        TF0=0;
+  74   1        ET0=1;
+  75   1        EA=1; //中断开启
+  76   1      
+  77   1      }
+  78          
+  79          int  cnt=0;
+  80          int  angel=0;
+  81          void ServoMotorTest(void){
+  82   1        if(KEY1==0)   angel=3;
+  83   1        if(KEY2==0)   angel=0;
+  84   1        if(KEY3==0)   angel=4;
+  85   1      }
+  86          
+  87          
+  88          
+  89          void Time0() interrupt 1    //中断函数
+  90          {   
+  91   1        TL0 = 0x33; 
+  92   1        TH0 = 0xFE;
+  93   1        cnt++;
+  94   1        
+  95   1        if(cnt<=angel)//当小于等于时，这里变为高电平
+  96   1        {
+  97   2           SG90=1;
+  98   2        }
+  99   1        else
+ 100   1        {
+ 101   2           SG90=0;
+ 102   2        }
+ 103   1         
+ 104   1        if(cnt==40)
+ 105   1        {
+ 106   2          cnt=0;
+ 107   2          SG90=1;
+ 108   2        }
+ 109   1        
+ 110   1      }
+ 111          /*---Lightpatrol-----------相关函数--------------*/
+ 112          void Lightpatrol_Test(void)//巡光模块
+ 113          {
+ 114   1      
+ 115   1        if(XG1OUT==1) LED3 = 1; else LED3 = 0 ;
+ 116   1        if(XG2OUT==1) LED4 = 1; else LED4 = 0 ;
+C51 COMPILER V9.60.0.0   MAIN                                                              02/17/2023 10:58:02 PAGE 3   
+
+ 117   1        if(XG3OUT==1) LED5 = 1; else LED5 = 0 ;
+ 118   1      }
+ 119          
+ 120          
+ 121          /*--L298N------------相关函数--------------*/
+ 122          void L298N_Test(void){
+ 123   1          IN1=0;IN2=1;//电机1正转
+ 124   1          IN3=0;IN4=1;//电机2正转   
+ 125   1          Delay100ms();Delay100ms();Delay100ms();
+ 126   1        
+ 127   1          IN1=1;IN2=0;//电机1反转
+ 128   1          IN3=1;IN4=0;//电机2反转
+ 129   1          Delay100ms();Delay100ms();Delay100ms();
+ 130   1        
+ 131   1          IN1=0;IN2=0;//电机1制动
+ 132   1          IN3=0;IN4=0;//电机2制动 
+ 133   1          Delay100ms();Delay100ms();Delay100ms();
+ 134   1      }
+ 135          
+ 136          
+ 137          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    210    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      4    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

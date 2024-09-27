@@ -1,0 +1,249 @@
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                    02/17/2023  10:58:23  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22.2.0, INVOKED BY:
+D:\SOFTWARE\KEIL5\C51\BIN\BL51.EXE .\Objects\STARTUP.obj, .\Objects\main.obj TO .\Objects\Project5 PRINT (.\Listings\Pro
+>> ject5.m51) RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\STARTUP.obj (?C_STARTUP)
+  .\Objects\main.obj (MAIN)
+  D:\SOFTWARE\KEIL5\C51\LIB\C51S.LIB (?C_INIT)
+
+
+LINK MAP OF MODULE:  .\Objects\Project5 (?C_STARTUP)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0004H     UNIT         ?DT?MAIN
+            IDATA   000CH     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+                    0003H     0008H                  *** GAP ***
+            CODE    000BH     0003H     ABSOLUTE     
+            CODE    000EH     008CH     UNIT         ?C_C51STARTUP
+            CODE    009AH     0041H     UNIT         ?PR?TIME0?MAIN
+            CODE    00DBH     0029H     UNIT         ?PR?L298N_TEST?MAIN
+            CODE    0104H     001BH     UNIT         ?PR?SERVOMOTORTEST?MAIN
+            CODE    011FH     001BH     UNIT         ?PR?LIGHTPATROL_TEST?MAIN
+            CODE    013AH     0012H     UNIT         ?PR?DELAY100MS?MAIN
+            CODE    014CH     0012H     UNIT         ?PR?TIME0INIT?MAIN
+            CODE    015EH     000EH     UNIT         ?PR?MAIN?MAIN
+            CODE    016CH     0009H     UNIT         ?C_INITSEG
+
+
+
+OVERLAY MAP OF MODULE:   .\Objects\Project5 (?C_STARTUP)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?MAIN
+  +--> ?C_INITSEG
+
+?PR?MAIN?MAIN
+  +--> ?PR?TIME0INIT?MAIN
+  +--> ?PR?SERVOMOTORTEST?MAIN
+  +--> ?PR?LIGHTPATROL_TEST?MAIN
+  +--> ?PR?L298N_TEST?MAIN
+
+?PR?L298N_TEST?MAIN
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  02/17/2023  10:58:23  PAGE 2
+
+
+  +--> ?PR?DELAY100MS?MAIN
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\Project5 (?C_STARTUP)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        ?C_STARTUP
+  C:000EH         SEGMENT       ?C_C51STARTUP
+  I:000CH         SEGMENT       ?STACK
+  C:0000H         PUBLIC        ?C_STARTUP
+  D:00E0H         SYMBOL        ACC
+  D:00F0H         SYMBOL        B
+  D:0083H         SYMBOL        DPH
+  D:0082H         SYMBOL        DPL
+  N:0000H         SYMBOL        IBPSTACK
+  N:0100H         SYMBOL        IBPSTACKTOP
+  N:0080H         SYMBOL        IDATALEN
+  C:0011H         SYMBOL        IDATALOOP
+  N:0000H         SYMBOL        PBPSTACK
+  N:0100H         SYMBOL        PBPSTACKTOP
+  N:0000H         SYMBOL        PDATALEN
+  N:0000H         SYMBOL        PDATASTART
+  N:0000H         SYMBOL        PPAGE
+  N:0000H         SYMBOL        PPAGEENABLE
+  D:00A0H         SYMBOL        PPAGE_SFR
+  D:0081H         SYMBOL        SP
+  C:000EH         SYMBOL        STARTUP1
+  N:0000H         SYMBOL        XBPSTACK
+  N:0000H         SYMBOL        XBPSTACKTOP
+  N:0000H         SYMBOL        XDATALEN
+  N:0000H         SYMBOL        XDATASTART
+  C:0000H         LINE#         126
+  C:000EH         LINE#         133
+  C:0010H         LINE#         134
+  C:0011H         LINE#         135
+  C:0012H         LINE#         136
+  C:0014H         LINE#         185
+  C:0017H         LINE#         196
+  -------         ENDMOD        ?C_STARTUP
+
+  -------         MODULE        MAIN
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  B:00A0H.5       PUBLIC        SG90
+  B:00A8H.7       PUBLIC        EA
+  B:0090H.0       PUBLIC        LED3
+  D:0008H         PUBLIC        angel
+  B:0090H.1       PUBLIC        LED4
+  B:0090H.2       PUBLIC        LED5
+  D:00A8H         PUBLIC        IE
+  C:011FH         PUBLIC        Lightpatrol_Test
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  02/17/2023  10:58:23  PAGE 3
+
+
+  D:00B8H         PUBLIC        IP
+  B:00B0H.0       PUBLIC        KEY1
+  B:00B0H.1       PUBLIC        KEY2
+  B:00B0H.2       PUBLIC        KEY3
+  C:015EH         PUBLIC        main
+  D:0098H         PUBLIC        SCON
+  D:0089H         PUBLIC        TMOD
+  D:0088H         PUBLIC        TCON
+  C:009AH         PUBLIC        Time0
+  C:00DBH         PUBLIC        L298N_Test
+  D:000AH         PUBLIC        cnt
+  B:0080H.0       PUBLIC        IN1
+  B:0080H.1       PUBLIC        IN2
+  B:00A8H.1       PUBLIC        ET0
+  B:0080H.2       PUBLIC        IN3
+  B:0080H.4       PUBLIC        XG1OUT
+  C:0104H         PUBLIC        ServoMotorTest
+  B:0088H.5       PUBLIC        TF0
+  B:0080H.3       PUBLIC        IN4
+  B:0080H.5       PUBLIC        XG2OUT
+  B:0080H.6       PUBLIC        XG3OUT
+  D:008CH         PUBLIC        TH0
+  D:008AH         PUBLIC        TL0
+  B:0088H.4       PUBLIC        TR0
+  C:014CH         PUBLIC        Time0Init
+  C:013FH         PUBLIC        Delay100ms
+  D:00C8H         PUBLIC        T2CON
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          MAIN
+  C:015EH         LINE#         37
+  C:015EH         LINE#         38
+  C:015EH         LINE#         39
+  C:0161H         LINE#         40
+  C:0161H         LINE#         41
+  C:0164H         LINE#         42
+  C:0167H         LINE#         43
+  C:016AH         LINE#         44
+  -------         ENDPROC       MAIN
+  -------         PROC          L?0031
+  -------         ENDPROC       L?0031
+  -------         PROC          DELAY100MS
+  -------         DO            
+  D:0007H         SYMBOL        i
+  D:0006H         SYMBOL        j
+  D:0005H         SYMBOL        k
+  -------         ENDDO         
+  C:013FH         LINE#         50
+  C:013FH         LINE#         51
+  C:013FH         LINE#         54
+  C:0141H         LINE#         55
+  C:0143H         LINE#         56
+  C:0145H         LINE#         58
+  C:0145H         LINE#         60
+  C:0145H         LINE#         61
+  C:0147H         LINE#         62
+  C:0149H         LINE#         63
+  C:014BH         LINE#         64
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  02/17/2023  10:58:23  PAGE 4
+
+
+  -------         ENDPROC       DELAY100MS
+  -------         PROC          TIME0INIT
+  C:014CH         LINE#         66
+  C:014CH         LINE#         67
+  C:014FH         LINE#         68
+  C:0152H         LINE#         69
+  C:0155H         LINE#         71
+  C:0157H         LINE#         73
+  C:0159H         LINE#         74
+  C:015BH         LINE#         75
+  C:015DH         LINE#         77
+  -------         ENDPROC       TIME0INIT
+  -------         PROC          SERVOMOTORTEST
+  C:0104H         LINE#         81
+  C:0104H         LINE#         82
+  C:010DH         LINE#         83
+  C:0115H         LINE#         84
+  C:011EH         LINE#         85
+  -------         ENDPROC       SERVOMOTORTEST
+  -------         PROC          TIME0
+  C:009AH         LINE#         89
+  C:00A3H         LINE#         91
+  C:00A6H         LINE#         92
+  C:00A9H         LINE#         93
+  C:00B1H         LINE#         95
+  C:00C0H         LINE#         96
+  C:00C0H         LINE#         97
+  C:00C2H         LINE#         98
+  C:00C4H         LINE#         100
+  C:00C4H         LINE#         101
+  C:00C6H         LINE#         102
+  C:00C6H         LINE#         104
+  C:00CEH         LINE#         105
+  C:00CEH         LINE#         106
+  C:00D2H         LINE#         107
+  C:00D4H         LINE#         108
+  C:00D4H         LINE#         110
+  -------         ENDPROC       TIME0
+  -------         PROC          LIGHTPATROL_TEST
+  C:011FH         LINE#         112
+  C:011FH         LINE#         113
+  C:011FH         LINE#         115
+  C:0128H         LINE#         116
+  C:0131H         LINE#         117
+  C:0139H         LINE#         118
+  -------         ENDPROC       LIGHTPATROL_TEST
+  -------         PROC          L298N_TEST
+  C:00DBH         LINE#         122
+  C:00DBH         LINE#         123
+  C:00DFH         LINE#         124
+  C:00E3H         LINE#         125
+  C:00ECH         LINE#         127
+  C:00F0H         LINE#         128
+  C:00F2H         LINE#         129
+  C:00F8H         LINE#         131
+  C:00FCH         LINE#         132
+  C:00FEH         LINE#         133
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  02/17/2023  10:58:23  PAGE 5
+
+
+  -------         ENDPROC       L298N_TEST
+  -------         ENDMOD        MAIN
+
+Program Size: data=13.0 xdata=0 code=365
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

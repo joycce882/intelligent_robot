@@ -1,0 +1,158 @@
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                    12/16/2022  11:18:50  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22.2.0, INVOKED BY:
+D:\SOFTWARE\KEIL5\C51\BIN\BL51.EXE .\Objects\STARTUP.obj, .\Objects\main.obj TO .\Objects\L298N PRINT (.\Listings\L298N.
+>> m51) RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\STARTUP.obj (?C_STARTUP)
+  .\Objects\main.obj (MAIN)
+
+
+LINK MAP OF MODULE:  .\Objects\L298N (?C_STARTUP)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            IDATA   0008H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     0029H     UNIT         ?PR?L298N_TEST?MAIN
+            CODE    002CH     0012H     UNIT         ?PR?DELAY100MS?MAIN
+            CODE    003EH     000CH     UNIT         ?C_C51STARTUP
+            CODE    004AH     0005H     UNIT         ?PR?MAIN?MAIN
+
+
+
+OVERLAY MAP OF MODULE:   .\Objects\L298N (?C_STARTUP)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?MAIN
+
+?PR?MAIN?MAIN
+  +--> ?PR?L298N_TEST?MAIN
+
+?PR?L298N_TEST?MAIN
+  +--> ?PR?DELAY100MS?MAIN
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\L298N (?C_STARTUP)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        ?C_STARTUP
+  C:003EH         SEGMENT       ?C_C51STARTUP
+  I:0008H         SEGMENT       ?STACK
+  C:0000H         PUBLIC        ?C_STARTUP
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  12/16/2022  11:18:50  PAGE 2
+
+
+  D:00E0H         SYMBOL        ACC
+  D:00F0H         SYMBOL        B
+  D:0083H         SYMBOL        DPH
+  D:0082H         SYMBOL        DPL
+  N:0000H         SYMBOL        IBPSTACK
+  N:0100H         SYMBOL        IBPSTACKTOP
+  N:0080H         SYMBOL        IDATALEN
+  C:0041H         SYMBOL        IDATALOOP
+  N:0000H         SYMBOL        PBPSTACK
+  N:0100H         SYMBOL        PBPSTACKTOP
+  N:0000H         SYMBOL        PDATALEN
+  N:0000H         SYMBOL        PDATASTART
+  N:0000H         SYMBOL        PPAGE
+  N:0000H         SYMBOL        PPAGEENABLE
+  D:00A0H         SYMBOL        PPAGE_SFR
+  D:0081H         SYMBOL        SP
+  C:003EH         SYMBOL        STARTUP1
+  N:0000H         SYMBOL        XBPSTACK
+  N:0000H         SYMBOL        XBPSTACKTOP
+  N:0000H         SYMBOL        XDATALEN
+  N:0000H         SYMBOL        XDATASTART
+  C:0000H         LINE#         126
+  C:003EH         LINE#         133
+  C:0040H         LINE#         134
+  C:0041H         LINE#         135
+  C:0042H         LINE#         136
+  C:0044H         LINE#         185
+  C:0047H         LINE#         196
+  -------         ENDMOD        ?C_STARTUP
+
+  -------         MODULE        MAIN
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:0090H         PUBLIC        P1
+  D:00B0H         PUBLIC        P3
+  D:00A8H         PUBLIC        IE
+  D:00B8H         PUBLIC        IP
+  C:004AH         PUBLIC        main
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  C:0003H         PUBLIC        L298N_Test
+  B:0080H.0       PUBLIC        IN1
+  B:0080H.1       PUBLIC        IN2
+  B:0080H.2       PUBLIC        IN3
+  B:0080H.3       PUBLIC        IN4
+  C:0031H         PUBLIC        Delay100ms
+  D:00C8H         PUBLIC        T2CON
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          MAIN
+  C:004AH         LINE#         17
+  C:004AH         LINE#         18
+  C:004AH         LINE#         20
+  C:004AH         LINE#         21
+  C:004DH         LINE#         22
+  -------         ENDPROC       MAIN
+  -------         PROC          L?0014
+  -------         ENDPROC       L?0014
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  12/16/2022  11:18:50  PAGE 3
+
+
+  -------         PROC          DELAY100MS
+  -------         DO            
+  D:0007H         SYMBOL        i
+  D:0006H         SYMBOL        j
+  D:0005H         SYMBOL        k
+  -------         ENDDO         
+  C:0031H         LINE#         27
+  C:0031H         LINE#         28
+  C:0031H         LINE#         31
+  C:0033H         LINE#         32
+  C:0035H         LINE#         33
+  C:0037H         LINE#         35
+  C:0037H         LINE#         37
+  C:0037H         LINE#         38
+  C:0039H         LINE#         39
+  C:003BH         LINE#         40
+  C:003DH         LINE#         41
+  -------         ENDPROC       DELAY100MS
+  -------         PROC          L298N_TEST
+  C:0003H         LINE#         44
+  C:0003H         LINE#         45
+  C:0007H         LINE#         46
+  C:000BH         LINE#         47
+  C:0014H         LINE#         49
+  C:0018H         LINE#         50
+  C:001AH         LINE#         51
+  C:0020H         LINE#         53
+  C:0024H         LINE#         54
+  C:0026H         LINE#         55
+  -------         ENDPROC       L298N_TEST
+  -------         ENDMOD        MAIN
+
+Program Size: data=9.0 xdata=0 code=79
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

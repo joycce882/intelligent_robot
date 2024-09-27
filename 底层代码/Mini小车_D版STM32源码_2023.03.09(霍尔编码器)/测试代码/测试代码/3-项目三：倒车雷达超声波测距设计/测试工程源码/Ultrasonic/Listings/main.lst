@@ -1,0 +1,133 @@
+C51 COMPILER V9.60.0.0   MAIN                                                              02/16/2023 15:31:06 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: D:\SoftWare\keil5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listin
+                    -gs\main.lst) TABS(2) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          #include <reg52.h>
+   2          #include <intrins.h>
+   3          
+   4          //-------LED-----------//
+   5          sbit LED3 = P1^0;
+   6          sbit LED4 = P1^1;
+   7          sbit LED5 = P1^2;
+   8          sbit LED6 = P1^3; 
+   9          sbit LED7 = P1^4;
+  10          
+  11          //--------超声波测距-PIN---------//
+  12          sbit Trig = P2^0;
+  13          sbit Echo = P2^1;
+  14          
+  15          /*函数或者变量声明*/
+  16          void Delay10us();
+  17          void Rstart();
+  18          int gettime();
+  19          float Getdis(unsigned int time);
+  20          void star();
+  21          void end();
+  22          void GetOnce();
+  23          void  UltrasonicTest(void);
+  24          /*-------------- 主函数--------------*/
+  25          void main()
+  26          {
+  27   1      
+  28   1          while(1){
+  29   2          UltrasonicTest();
+  30   2          }
+  31   1      
+  32   1      }
+  33          
+  34          /*--------------相关函数--------------*/
+  35          void Delay10us()
+  36          {
+  37   1       TMOD |= 0x1;
+  38   1       TH0 = 0xFF;
+  39   1       TL0 = 0xF6;
+  40   1       TR0 = 1;
+  41   1       while(!TF0);
+  42   1       TF0 = 0;
+  43   1      }
+  44          void Rstart()  
+  45          {
+  46   1       Trig=0;
+  47   1       Trig=1;
+  48   1       Delay10us();
+  49   1       Trig=0;
+  50   1      }
+  51          
+  52          //获取时间
+  53          int gettime()
+  54          {
+C51 COMPILER V9.60.0.0   MAIN                                                              02/16/2023 15:31:06 PAGE 2   
+
+  55   1       unsigned int time = 0;
+  56   1       time = TH0*256+TL0 ;// TH0<<8 | TL0;
+  57   1       return time;
+  58   1      }
+  59          //获取距离
+  60          float Getdis(unsigned int time)  
+  61          {
+  62   1       float distance;
+  63   1       distance = (float)time * 0.0017;
+  64   1         TH0=0;
+  65   1         TL0=0;
+  66   1       return distance;
+  67   1      }
+  68          void star()
+  69          {
+  70   1       TH0 = 0;
+  71   1       TL0 = 0;
+  72   1       TR0 = 1;
+  73   1      }
+  74          void end()
+  75          {
+  76   1       TR0 = 0;
+  77   1      }
+  78          void GetOnce()  
+  79          {
+  80   1       Rstart();
+  81   1       while(!Echo);
+  82   1       star();
+  83   1       while(Echo);
+  84   1       end();
+  85   1      }
+  86          
+  87          unsigned int time = -1;
+  88          float dis = -1;
+  89          void UltrasonicTest(void){  //超声波模块测试
+  90   1        GetOnce();
+  91   1        time = gettime();
+  92   1        dis = Getdis(time);
+  93   1        
+  94   1      //  if(dis!=-1) LED4=0;
+  95   1      //  else LED4=1;
+  96   1        
+  97   1          if(dis>5) LED4=0;
+  98   1        else LED4=1;
+  99   1        
+ 100   1      }
+ 101          /*--------------相关函数--------------*/
+ 102          
+ 103          
+ 104          
+ 105          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    147    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      6    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+C51 COMPILER V9.60.0.0   MAIN                                                              02/16/2023 15:31:06 PAGE 3   
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

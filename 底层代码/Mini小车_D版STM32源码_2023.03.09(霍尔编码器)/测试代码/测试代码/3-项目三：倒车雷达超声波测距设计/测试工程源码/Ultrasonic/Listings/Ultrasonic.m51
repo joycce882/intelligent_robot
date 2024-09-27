@@ -1,0 +1,265 @@
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                    02/16/2023  15:31:06  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22.2.0, INVOKED BY:
+D:\SOFTWARE\KEIL5\C51\BIN\BL51.EXE .\Objects\STARTUP.obj, .\Objects\main.obj TO .\Objects\Ultrasonic PRINT (.\Listings\U
+>> ltrasonic.m51) RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL WITH FLOATING POINT ARITHMETIC
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\STARTUP.obj (?C_STARTUP)
+  .\Objects\main.obj (MAIN)
+  D:\SOFTWARE\KEIL5\C51\LIB\C51FPS.LIB (?C?FPMUL)
+  D:\SOFTWARE\KEIL5\C51\LIB\C51FPS.LIB (?C?FPCMP)
+  D:\SOFTWARE\KEIL5\C51\LIB\C51FPS.LIB (?C?FCAST)
+  D:\SOFTWARE\KEIL5\C51\LIB\C51FPS.LIB (?C?FPGETOPN)
+  D:\SOFTWARE\KEIL5\C51\LIB\C51S.LIB (?C_INIT)
+  D:\SOFTWARE\KEIL5\C51\LIB\C51S.LIB (?C?LNEG)
+
+
+LINK MAP OF MODULE:  .\Objects\Ultrasonic (?C_STARTUP)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0006H     UNIT         ?DT?MAIN
+            IDATA   000EH     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     0215H     UNIT         ?C?LIB_CODE
+            CODE    0218H     008CH     UNIT         ?C_C51STARTUP
+            CODE    02A4H     0031H     UNIT         ?PR?ULTRASONICTEST?MAIN
+            CODE    02D5H     0019H     UNIT         ?PR?_GETDIS?MAIN
+            CODE    02EEH     0011H     UNIT         ?PR?DELAY10US?MAIN
+            CODE    02FFH     000FH     UNIT         ?PR?GETTIME?MAIN
+            CODE    030EH     000FH     UNIT         ?PR?GETONCE?MAIN
+            CODE    031DH     000BH     UNIT         ?C_INITSEG
+            CODE    0328H     000AH     UNIT         ?PR?RSTART?MAIN
+            CODE    0332H     0008H     UNIT         ?PR?STAR?MAIN
+            CODE    033AH     0005H     UNIT         ?PR?MAIN?MAIN
+            CODE    033FH     0003H     UNIT         ?PR?END?MAIN
+
+
+
+OVERLAY MAP OF MODULE:   .\Objects\Ultrasonic (?C_STARTUP)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?MAIN
+  +--> ?C_INITSEG
+
+?PR?MAIN?MAIN
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  02/16/2023  15:31:06  PAGE 2
+
+
+  +--> ?PR?ULTRASONICTEST?MAIN
+
+?PR?ULTRASONICTEST?MAIN
+  +--> ?PR?GETONCE?MAIN
+  +--> ?PR?GETTIME?MAIN
+  +--> ?PR?_GETDIS?MAIN
+
+?PR?GETONCE?MAIN
+  +--> ?PR?RSTART?MAIN
+  +--> ?PR?STAR?MAIN
+  +--> ?PR?END?MAIN
+
+?PR?RSTART?MAIN
+  +--> ?PR?DELAY10US?MAIN
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\Ultrasonic (?C_STARTUP)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        ?C_STARTUP
+  C:0218H         SEGMENT       ?C_C51STARTUP
+  I:000EH         SEGMENT       ?STACK
+  C:0000H         PUBLIC        ?C_STARTUP
+  D:00E0H         SYMBOL        ACC
+  D:00F0H         SYMBOL        B
+  D:0083H         SYMBOL        DPH
+  D:0082H         SYMBOL        DPL
+  N:0000H         SYMBOL        IBPSTACK
+  N:0100H         SYMBOL        IBPSTACKTOP
+  N:0080H         SYMBOL        IDATALEN
+  C:021BH         SYMBOL        IDATALOOP
+  N:0000H         SYMBOL        PBPSTACK
+  N:0100H         SYMBOL        PBPSTACKTOP
+  N:0000H         SYMBOL        PDATALEN
+  N:0000H         SYMBOL        PDATASTART
+  N:0000H         SYMBOL        PPAGE
+  N:0000H         SYMBOL        PPAGEENABLE
+  D:00A0H         SYMBOL        PPAGE_SFR
+  D:0081H         SYMBOL        SP
+  C:0218H         SYMBOL        STARTUP1
+  N:0000H         SYMBOL        XBPSTACK
+  N:0000H         SYMBOL        XBPSTACKTOP
+  N:0000H         SYMBOL        XDATALEN
+  N:0000H         SYMBOL        XDATASTART
+  C:0000H         LINE#         126
+  C:0218H         LINE#         133
+  C:021AH         LINE#         134
+  C:021BH         LINE#         135
+  C:021CH         LINE#         136
+  C:021EH         LINE#         185
+  C:0221H         LINE#         196
+  -------         ENDMOD        ?C_STARTUP
+
+  -------         MODULE        MAIN
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  02/16/2023  15:31:06  PAGE 3
+
+
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  B:00A0H.1       PUBLIC        Echo
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  C:0328H         PUBLIC        Rstart
+  B:0090H.1       PUBLIC        LED4
+  D:00A8H         PUBLIC        IE
+  B:00A0H.0       PUBLIC        Trig
+  D:00B8H         PUBLIC        IP
+  C:033AH         PUBLIC        main
+  C:030EH         PUBLIC        GetOnce
+  D:0008H         PUBLIC        time
+  D:0098H         PUBLIC        SCON
+  D:0089H         PUBLIC        TMOD
+  D:0088H         PUBLIC        TCON
+  C:033FH         PUBLIC        end
+  C:0332H         PUBLIC        star
+  C:02EEH         PUBLIC        Delay10us
+  D:000AH         PUBLIC        dis
+  B:0088H.5       PUBLIC        TF0
+  D:008CH         PUBLIC        TH0
+  C:02A4H         PUBLIC        UltrasonicTest
+  D:008AH         PUBLIC        TL0
+  B:0088H.4       PUBLIC        TR0
+  C:02D5H         PUBLIC        _Getdis
+  D:00C8H         PUBLIC        T2CON
+  C:02FFH         PUBLIC        gettime
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          MAIN
+  C:033AH         LINE#         25
+  C:033AH         LINE#         26
+  C:033AH         LINE#         28
+  C:033AH         LINE#         29
+  C:033DH         LINE#         30
+  -------         ENDPROC       MAIN
+  -------         PROC          DELAY10US
+  C:02EEH         LINE#         35
+  C:02EEH         LINE#         36
+  C:02EEH         LINE#         37
+  C:02F1H         LINE#         38
+  C:02F4H         LINE#         39
+  C:02F7H         LINE#         40
+  C:02F9H         LINE#         41
+  C:02FCH         LINE#         42
+  C:02FEH         LINE#         43
+  -------         ENDPROC       DELAY10US
+  -------         PROC          RSTART
+  C:0328H         LINE#         44
+  C:0328H         LINE#         45
+  C:0328H         LINE#         46
+  C:032AH         LINE#         47
+  C:032CH         LINE#         48
+  C:032FH         LINE#         49
+  C:0331H         LINE#         50
+  -------         ENDPROC       RSTART
+  -------         PROC          GETTIME
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  02/16/2023  15:31:06  PAGE 4
+
+
+  -------         DO            
+  D:0006H         SYMBOL        time
+  -------         ENDDO         
+  C:02FFH         LINE#         53
+  C:02FFH         LINE#         54
+  C:02FFH         LINE#         55
+  C:02FFH         LINE#         56
+  C:030DH         LINE#         57
+  C:030DH         LINE#         58
+  -------         ENDPROC       GETTIME
+  -------         PROC          _GETDIS
+  D:0006H         SYMBOL        time
+  -------         DO            
+  D:0004H         SYMBOL        distance
+  -------         ENDDO         
+  C:02D5H         LINE#         60
+  C:02D5H         LINE#         61
+  C:02D5H         LINE#         63
+  C:02E8H         LINE#         64
+  C:02EBH         LINE#         65
+  C:02EDH         LINE#         66
+  C:02EDH         LINE#         67
+  -------         ENDPROC       _GETDIS
+  -------         PROC          STAR
+  C:0332H         LINE#         68
+  C:0332H         LINE#         69
+  C:0332H         LINE#         70
+  C:0335H         LINE#         71
+  C:0337H         LINE#         72
+  C:0339H         LINE#         73
+  -------         ENDPROC       STAR
+  -------         PROC          END
+  C:033FH         LINE#         74
+  C:033FH         LINE#         75
+  C:033FH         LINE#         76
+  C:0341H         LINE#         77
+  -------         ENDPROC       END
+  -------         PROC          GETONCE
+  C:030EH         LINE#         78
+  C:030EH         LINE#         79
+  C:030EH         LINE#         80
+  C:0311H         LINE#         81
+  C:0314H         LINE#         82
+  C:0317H         LINE#         83
+  C:031AH         LINE#         84
+  -------         ENDPROC       GETONCE
+  -------         PROC          ULTRASONICTEST
+  C:02A4H         LINE#         89
+  C:02A4H         LINE#         90
+  C:02A7H         LINE#         91
+  C:02AEH         LINE#         92
+  C:02B9H         LINE#         97
+  C:02D2H         LINE#         98
+  C:02D4H         LINE#         100
+  -------         ENDPROC       ULTRASONICTEST
+  -------         ENDMOD        MAIN
+
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  02/16/2023  15:31:06  PAGE 5
+
+
+  -------         MODULE        ?C?FPMUL
+  C:0003H         PUBLIC        ?C?FPMUL
+  -------         ENDMOD        ?C?FPMUL
+
+  -------         MODULE        ?C?FPCMP
+  C:010BH         PUBLIC        ?C?FPCMP
+  C:0109H         PUBLIC        ?C?FPCMP3
+  -------         ENDMOD        ?C?FPCMP
+
+  -------         MODULE        ?C?FCAST
+  C:018CH         PUBLIC        ?C?FCASTC
+  C:0187H         PUBLIC        ?C?FCASTI
+  C:0182H         PUBLIC        ?C?FCASTL
+  -------         ENDMOD        ?C?FCAST
+
+  -------         MODULE        ?C?LNEG
+  C:020AH         PUBLIC        ?C?LNEG
+  -------         ENDMOD        ?C?LNEG
+
+Program Size: data=15.0 xdata=0 code=834
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

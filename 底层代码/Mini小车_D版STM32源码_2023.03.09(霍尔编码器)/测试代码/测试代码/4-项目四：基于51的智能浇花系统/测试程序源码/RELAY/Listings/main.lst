@@ -1,0 +1,75 @@
+C51 COMPILER V9.60.0.0   MAIN                                                              12/16/2022 14:15:38 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: D:\SoftWare\keil5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listin
+                    -gs\main.lst) TABS(2) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          #include <reg52.h>
+   2          #include <intrins.h>
+   3          
+   4          //--------继电器-PIN----------//
+   5          sbit RELAY = P3^7;
+   6          
+   7          /*函数或者变量声明*/
+   8          void  Delay1000ms();
+   9          void  RELAY_Test(void);
+  10          /*-------------- 主函数--------------*/
+  11          void main()
+  12          {
+  13   1          while(1){
+  14   2      //      RELAY = 1 ;
+  15   2          RELAY_Test();
+  16   2          }
+  17   1      
+  18   1      }
+  19          
+  20          /*--------------相关函数--------------*/
+  21          //延时函数
+  22          void Delay1000ms()    //@11.0592MHz
+  23          {
+  24   1        unsigned char i, j, k;
+  25   1      
+  26   1        i = 57;
+  27   1        j = 27;
+  28   1        k = 112;
+  29   1        do
+  30   1        {
+  31   2          do
+  32   2          {
+  33   3            while (--k);
+  34   3          } while (--j);
+  35   2        } while (--i);
+  36   1      }
+  37          
+  38          void RELAY_Test(void){
+  39   1          RELAY = 0;
+  40   1          Delay1000ms();
+  41   1          RELAY = 1;
+  42   1          Delay1000ms();
+  43   1      }
+  44          
+  45          /*--------------相关函数--------------*/
+  46          
+  47          
+  48          
+  49          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     28    ----
+   CONSTANT SIZE    =   ----    ----
+C51 COMPILER V9.60.0.0   MAIN                                                              12/16/2022 14:15:38 PAGE 2   
+
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

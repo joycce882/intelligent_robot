@@ -1,0 +1,320 @@
+C51 COMPILER V9.60.0.0   MAIN                                                              02/16/2023 18:04:44 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: D:\SoftWare\keil5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listin
+                    -gs\main.lst) TABS(2) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          #include <reg52.h>
+   2          #include <intrins.h>
+   3          //-------BEEP-PIN-----------//
+   4          sbit BEEP = P1^5;
+   5          
+   6          //-------KEY-PIN-----------//
+   7          sbit KEY1 = P3^0;
+   8          sbit KEY2 = P3^1;
+   9          sbit KEY3 = P3^2;
+  10          sbit KEY4 = P3^3;
+  11          
+  12          //-------数码管-PIN-----------//
+  13          typedef unsigned char u8;
+  14          typedef unsigned int u16;
+  15          typedef unsigned long u32;
+  16          
+  17          sbit LSA  = P2^2; //定义管脚
+  18          sbit LSB  = P2^3;
+  19          sbit LSC  = P2^4;
+  20          
+  21          sbit LE   = P2^5;  //定义方向
+  22          
+  23          u8 code gsmg_code[16]={ 0x3f  , 0x06 , 0x5b , 0x4f , 
+  24                                  0x66  , 0x6d , 0x7d , 0x07 , 
+  25                                  0x7f  , 0x6f , 0x77 , 0x7c ,                                //Line   Bleak  Bleak   Spot
+  26                                  0x39  , 0x5e , 0x79 , 0x71};//共阴数码管段选数据即显示的数字//0x40   0x00   0xFF   0x80
+  27          
+  28          
+  29          
+  30          
+  31          //-------DS1302-PIN-----------//
+  32          sbit DS1302_RST = P3^5;
+  33          sbit DS1302_CLK = P3^6;
+  34          sbit DS1302_IO  = P3^4;
+  35          
+  36          //---DS1302写入和读取时分秒的地址命令---//
+  37          //---秒分时日月周年 最低位读写位;-------//
+  38          u8 gREAD_RTC_ADDR[7] = {0x81, 0x83, 0x85, 0x87, 0x89, 0x8b, 0x8d}; 
+  39          u8 gWRITE_RTC_ADDR[7] = {0x80, 0x82, 0x84, 0x86, 0x88, 0x8a, 0x8c};
+  40          
+  41          //---DS1302时钟初始化2021年5月20日星期四13点51分47秒。---//
+  42          //---存储顺序是秒分时日月周年,存储格式是用BCD码---//
+  43          u8 gDS1302_TIME[7] = {0x47, 0x51, 0x13, 0x20, 0x04, 0x05, 0x21};
+  44          
+  45          
+  46          /*函数或者变量声明*/
+  47          void  Delay100ms();
+  48          void  delay_10us(u16 ten_us);
+  49          void  Delay100us();
+  50          void  BEEP_Test(void);
+  51          
+  52          void ds1302_init(void);
+  53          void ds1302_read_time(void);
+  54          
+C51 COMPILER V9.60.0.0   MAIN                                                              02/16/2023 18:04:44 PAGE 2   
+
+  55          void smg_display(u8 dat[],u8 pos);
+  56          /*-------------- 主函数--------------*/
+  57          void main()
+  58          {   
+  59   1          u8 clockStatus = 0 ;
+  60   1          u8 time_buf[8];
+  61   1          LE = 1 ;
+  62   1          ds1302_init();
+  63   1      
+  64   1          while(1){
+  65   2            ds1302_read_time();
+  66   2            time_buf[0]=gsmg_code[gDS1302_TIME[2]/16];
+  67   2            time_buf[1]=gsmg_code[gDS1302_TIME[2]&0x0f];
+  68   2            time_buf[2]=0x40;
+  69   2            time_buf[3]=gsmg_code[gDS1302_TIME[1]/16];
+  70   2            time_buf[4]=gsmg_code[gDS1302_TIME[1]&0x0f];
+  71   2            time_buf[5]=0x40;
+  72   2            time_buf[6]=gsmg_code[gDS1302_TIME[0]/16];
+  73   2            time_buf[7]=gsmg_code[gDS1302_TIME[0]&0x0f];
+  74   2            smg_display(time_buf,1);
+  75   2            
+  76   2            
+  77   2            BEEP_Test();
+  78   2          }
+  79   1      }
+  80          
+  81          /*--------------相关函数--------------*/
+  82          //延时函数
+  83          void Delay100ms()   //@11.0592MHz
+  84          {
+  85   1        unsigned char i, j, k;
+  86   1      
+  87   1        i = 5;
+  88   1        j = 52;
+  89   1        k = 195;
+  90   1        do
+  91   1        {
+  92   2          do
+  93   2          {
+  94   3            while (--k);
+  95   3          } while (--j);
+  96   2        } while (--i);
+  97   1      }
+  98          
+  99          
+ 100          
+ 101          void Delay100us()   //@11.0592MHz
+ 102          {
+ 103   1        unsigned char i, j;
+ 104   1      
+ 105   1      
+ 106   1        i = 2;
+ 107   1        j = 15;
+ 108   1        do
+ 109   1        {
+ 110   2          while (--j);
+ 111   2        } while (--i);
+ 112   1      }
+ 113          
+ 114          
+ 115          void delay_10us(u16 ten_us)
+ 116          {
+C51 COMPILER V9.60.0.0   MAIN                                                              02/16/2023 18:04:44 PAGE 3   
+
+ 117   1          while(ten_us--);    
+ 118   1      }
+ 119          /*********************************************************************************************************
+             -***/
+ 120          //数码管
+ 121          
+ 122          void smg_display(u8 dat[],u8 pos)
+ 123          {
+ 124   1          u8 i=0;
+ 125   1          u8 pos_temp=pos-1;
+ 126   1      
+ 127   1          for(i=pos_temp;i<8;i++)
+ 128   1          {
+ 129   2                 switch(i)//位选
+ 130   2              {
+ 131   3                  case 0: LSC=1;LSB=1;LSA=1;break;
+ 132   3                  case 1: LSC=1;LSB=1;LSA=0;break;
+ 133   3                  case 2: LSC=1;LSB=0;LSA=1;break;
+ 134   3                  case 3: LSC=1;LSB=0;LSA=0;break;
+ 135   3                  case 4: LSC=0;LSB=1;LSA=1;break;
+ 136   3                  case 5: LSC=0;LSB=1;LSA=0;break;
+ 137   3                  case 6: LSC=0;LSB=0;LSA=1;break;
+ 138   3                  case 7: LSC=0;LSB=0;LSA=0;break;
+ 139   3                
+ 140   3              }
+ 141   2              P0=dat[i-pos_temp];//传送段选数据
+ 142   2              delay_10us(100);//延时一段时间，等待显示稳定
+ 143   2              P0=0x00;//
+ 144   2          }
+ 145   1      }
+ 146          
+ 147          /*--------------相关函数--------------*/
+ 148          /*********************************************************************************************************
+             -***/
+ 149          //蜂鸣器
+ 150          void BEEP_Test(void){
+ 151   1          BEEP = 1 ;//不响
+ 152   1          Delay100ms();
+ 153   1          BEEP = 0 ;//响
+ 154   1          Delay100ms();
+ 155   1      }
+ 156          /*********************************************************************************************************
+             -***/
+ 157          //DS1302s
+ 158          /*******************************************************************************
+ 159          * 函 数 名       : ds1302_write_byte
+ 160          * 函数功能         : DS1302写单字节
+ 161          * 输    入       : addr：地址/命令
+ 162                             dat：数据
+ 163          * 输    出         : 无
+ 164          *******************************************************************************/
+ 165          void ds1302_write_byte(u8 addr,u8 dat)
+ 166          {
+ 167   1          u8 i=0;
+ 168   1          
+ 169   1          DS1302_RST=0;
+ 170   1          _nop_();    
+ 171   1          DS1302_CLK=0;//CLK低电平
+ 172   1          _nop_();
+ 173   1          DS1302_RST=1;//RST由低到高变化
+ 174   1          _nop_();
+ 175   1      
+C51 COMPILER V9.60.0.0   MAIN                                                              02/16/2023 18:04:44 PAGE 4   
+
+ 176   1          for(i=0;i<8;i++)//循环8次，每次写1位，先写低位再写高位
+ 177   1          {
+ 178   2              DS1302_IO=addr&0x01;
+ 179   2              addr>>=1;
+ 180   2              DS1302_CLK=1;
+ 181   2              _nop_();
+ 182   2              DS1302_CLK=0;//CLK由低到高产生一个上升沿，从而写入数据
+ 183   2              _nop_();        
+ 184   2          }
+ 185   1          for(i=0;i<8;i++)//循环8次，每次写1位，先写低位再写高位
+ 186   1          {
+ 187   2              DS1302_IO=dat&0x01;
+ 188   2              dat>>=1;
+ 189   2              DS1302_CLK=1;
+ 190   2              _nop_();
+ 191   2              DS1302_CLK=0;
+ 192   2              _nop_();        
+ 193   2          }
+ 194   1          DS1302_RST=0;//RST拉低
+ 195   1          _nop_();    
+ 196   1      }
+ 197          
+ 198          /*******************************************************************************
+ 199          * 函 数 名       : ds1302_read_byte
+ 200          * 函数功能         : DS1302读单字节
+ 201          * 输    入       : addr：地址/命令
+ 202          * 输    出         : 读取的数据
+ 203          *******************************************************************************/
+ 204          u8 ds1302_read_byte(u8 addr)
+ 205          {
+ 206   1          u8 i=0;
+ 207   1          u8 temp=0;
+ 208   1          u8 value=0;
+ 209   1      
+ 210   1          DS1302_RST=0;
+ 211   1          _nop_();    
+ 212   1          DS1302_CLK=0;//CLK低电平
+ 213   1          _nop_();
+ 214   1          DS1302_RST=1;//RST由低到高变化
+ 215   1          _nop_();
+ 216   1          
+ 217   1          for(i=0;i<8;i++)//循环8次，每次写1位，先写低位再写高位
+ 218   1          {
+ 219   2              DS1302_IO=addr&0x01;
+ 220   2              addr>>=1;    
+ 221   2              DS1302_CLK=1;
+ 222   2              _nop_();
+ 223   2              DS1302_CLK=0;//CLK由低到高产生一个上升沿，从而写入数据
+ 224   2              _nop_();        
+ 225   2          }
+ 226   1          for(i=0;i<8;i++)//循环8次，每次读1位，先读低位再读高位
+ 227   1          {
+ 228   2              temp=DS1302_IO;
+ 229   2              value=(temp<<7)|(value>>1);//先将value右移1位，然后temp左移7位，最后或运算
+ 230   2              DS1302_CLK=1;
+ 231   2              _nop_();
+ 232   2              DS1302_CLK=0;
+ 233   2              _nop_();        
+ 234   2          }
+ 235   1          DS1302_RST=0;//RST拉低
+ 236   1          _nop_();    
+ 237   1          DS1302_CLK=1;//对于实物中，P3.4口没有外接上拉电阻的，此处代码需要添加，使数据口有一个上升沿脉冲。
+C51 COMPILER V9.60.0.0   MAIN                                                              02/16/2023 18:04:44 PAGE 5   
+
+ 238   1          _nop_();
+ 239   1          DS1302_IO = 0;
+ 240   1          _nop_();
+ 241   1          DS1302_IO = 1;
+ 242   1          _nop_();    
+ 243   1          return value;        
+ 244   1      }
+ 245          
+ 246          /*******************************************************************************
+ 247          * 函 数 名       : ds1302_init
+ 248          * 函数功能         : DS1302初始化时间
+ 249          *******************************************************************************/
+ 250          void ds1302_init(void)
+ 251          {
+ 252   1          u8 i=0;
+ 253   1          ds1302_write_byte(0x8E,0X00);
+ 254   1          for(i=0;i<7;i++)
+ 255   1          {
+ 256   2              ds1302_write_byte(gWRITE_RTC_ADDR[i],gDS1302_TIME[i]);    
+ 257   2          }
+ 258   1          ds1302_write_byte(0x8E,0X80);    
+ 259   1      }
+ 260          
+ 261          /*******************************************************************************
+ 262          * 函 数 名       : ds1302_read_time
+ 263          * 函数功能         : DS1302读取时间
+ 264          *******************************************************************************/
+ 265          void ds1302_read_time(void)
+ 266          {
+ 267   1          u8 i=0;
+ 268   1          for(i=0;i<7;i++)
+ 269   1          {
+ 270   2              gDS1302_TIME[i]=ds1302_read_byte(gREAD_RTC_ADDR[i]);    
+ 271   2          }    
+ 272   1      }
+ 273          
+ 274          
+ 275          
+ 276          
+ 277          
+ 278          
+ 279          
+ 280          
+ 281          
+ 282          
+ 283          
+ 284          
+ 285          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    499    ----
+   CONSTANT SIZE    =     16    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     21      11
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

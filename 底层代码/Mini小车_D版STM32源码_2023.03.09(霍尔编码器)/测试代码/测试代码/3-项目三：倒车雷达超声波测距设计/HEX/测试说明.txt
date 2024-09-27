@@ -1,0 +1,5 @@
+文件名				测试效果
+BEEP.hex		 蜂鸣器间隔1s发出滴滴声
+LCD.hex		 LCD1602上显示英文测试字符
+Ultrasonic.hex 	 超声波模块无遮挡时LED4亮起，遮挡时LED4熄灭
+project3.hex	 LCD1602上显示距离数据，当距离小于5蜂鸣器响

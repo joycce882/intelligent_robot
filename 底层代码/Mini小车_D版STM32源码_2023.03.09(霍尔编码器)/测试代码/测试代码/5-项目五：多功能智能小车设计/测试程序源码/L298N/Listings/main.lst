@@ -1,0 +1,88 @@
+C51 COMPILER V9.60.0.0   MAIN                                                              12/16/2022 11:18:50 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: D:\SoftWare\keil5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listin
+                    -gs\main.lst) TABS(2) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          #include <reg52.h>
+   2          #include <intrins.h>
+   3          
+   4          
+   5          //-------电机-PIN------------//
+   6          //电机1
+   7          sbit IN1 = P0^0; 
+   8          sbit IN2 = P0^1;
+   9          //电机2
+  10          sbit IN3 = P0^2;  
+  11          sbit IN4 = P0^3;  
+  12          
+  13          /*函数或者变量声明*/
+  14          void Delay100ms();
+  15          void L298N_Test(void);
+  16          /*--------------主函数--------------*/
+  17          void main()
+  18          {
+  19   1      
+  20   1          while(1){
+  21   2          L298N_Test();
+  22   2          }
+  23   1      
+  24   1      }
+  25          
+  26          /*-------------相关函数-------------*/
+  27          void Delay100ms()   //@11.0592MHz
+  28          {
+  29   1        unsigned char i, j, k;
+  30   1      
+  31   1        i = 5;
+  32   1        j = 52;
+  33   1        k = 195;
+  34   1        do
+  35   1        {
+  36   2          do
+  37   2          {
+  38   3            while (--k);
+  39   3          } while (--j);
+  40   2        } while (--i);
+  41   1      }
+  42          
+  43          
+  44          void L298N_Test(void){
+  45   1          IN1=0;IN2=1;//电机1正转
+  46   1          IN3=0;IN4=1;//电机2正转   
+  47   1          Delay100ms();Delay100ms();Delay100ms();
+  48   1        
+  49   1          IN1=1;IN2=0;//电机1反转
+  50   1          IN3=1;IN4=0;//电机2反转
+  51   1          Delay100ms();Delay100ms();Delay100ms();
+  52   1        
+  53   1          IN1=0;IN2=0;//电机1制动
+  54   1          IN3=0;IN4=0;//电机2制动 
+C51 COMPILER V9.60.0.0   MAIN                                                              12/16/2022 11:18:50 PAGE 2   
+
+  55   1          Delay100ms();Delay100ms();Delay100ms();
+  56   1      }
+  57          
+  58          /*--------------相关函数--------------*/
+  59          
+  60          
+  61          
+  62          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     64    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

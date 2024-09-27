@@ -1,0 +1,5 @@
+文件名				测试效果
+RELAY.hex		 继电器间隔1s反复开关
+LCD.hex		 LCD1602上显示英文测试字符
+SoilMoisture.hex LCD1602上显示ADC数据和换算后的湿度值
+project4.hex	 LCD1602上显示湿度数据，当湿度数据小于55继电器开

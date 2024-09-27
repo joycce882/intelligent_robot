@@ -1,0 +1,5 @@
+文件名				测试效果
+BEEP.hex		 蜂鸣器间隔1s发出滴滴声
+KEY.hex		 按下按键时LED灯亮起不同的效果
+NixieTube.hex 	 8个数码管依次显示0-7
+Project2.hex	 8个数码管显示一个动态时间，同时蜂鸣器响	
